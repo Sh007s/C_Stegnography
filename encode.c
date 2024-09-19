@@ -4,6 +4,7 @@
 #include "types.h"
 #include "common.h"
 #include <string.h>
+
 /* Function Definitions */
 /* Get image size
  * Input: Image file ptr
@@ -14,7 +15,7 @@
  
 /* Function definition to read and validate arguments */
 
-Status read_and_validate_encode_args( char *argv[] , EncodeInfo *encInfo )
+Status read_and_validate_encode_args(int argc,  char *argv[] , EncodeInfo *encInfo )
 {
     if(strstr(argv[2], ".bmp") == NULL)
     {
@@ -30,25 +31,35 @@ Status read_and_validate_encode_args( char *argv[] , EncodeInfo *encInfo )
 
 	encInfo->src_image_fname = argv[2] ;
 	printf("Yes! argv[2] is a .bmp file\n");
-	encInfo -> secret_fname = argv[3];
-	if(argv[4] != NULL)
+	if( argc != 3)
 	{
-	    printf("Yes! argv[4] passed\n");
-	    if(strcmp(strstr(argv[4], "."), ".bmp") == 0)
-	    {
-		/* Storing passed output file */
-		encInfo->stego_image_fname = argv[4] ;
+    	    encInfo -> secret_fname = argv[3];
+	    if(argv[4] != NULL)
+    	    {
+		printf("Yes! argv[4] passed\n");
+		if(strcmp(strstr(argv[4], "."), ".bmp") == 0)
+		{
+		    /* Storing passed output file */
+		    printf("image name ");
+		    encInfo->stego_image_fname = argv[4] ;
+		}
+		else
+		{
+		    printf("Error\n");		
+		    return e_failure;
+		}
 	    }
 	    else
 	    {
-		return e_failure;
-	    }
+    		/* If output file is not passed then Creating new file with name stego_image.bmp */
+    		encInfo->stego_image_fname = "stego.bmp" ;
+    	    }
 	}
 	else
-       	{
-    	    /* If output file is not passed then Creating new file with name stego_image.bmp */
-    	    encInfo->stego_image_fname = "stego.bmp" ;
-    	}
+	{
+	    printf("only filename.bmp is file passed\n");
+	    return e_failure;
+	}
 	return e_success ;
     }
     else

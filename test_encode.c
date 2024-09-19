@@ -69,7 +69,7 @@ int main( char argc , char **argv )
 	printf("\nI am going to do Encoding \n");
 	EncodeInfo encInfo ;
 	/* Reading and validating encode arguments */
-	if (read_and_validate_encode_args( argv , &encInfo ) == e_success )
+	if (read_and_validate_encode_args( argc, argv , &encInfo ) == e_success )
 	{
 	    printf ("Read and validate encode arguments is a success \n");
 	    printf ("<--------------------Started Encoding-------------------->\n");
